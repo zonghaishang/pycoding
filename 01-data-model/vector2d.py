@@ -13,7 +13,7 @@ class Vector:
         return math.hypot(self.x, self.y)
 
     def __bool__(self):
-        return bool(abs(self))
+        return bool(self.x or self.y)
 
     def __add__(self, other):
         return Vector(self.x + other.x, self.y + other.y)
