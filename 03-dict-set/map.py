@@ -21,3 +21,6 @@ print('dd.__getitem__(1)', r)
 r=dd.get(7, 7)
 print('dd.get(7, __default=7)', r)
 
+dd.update({1:2, 3:4})
+print(dd)
+
