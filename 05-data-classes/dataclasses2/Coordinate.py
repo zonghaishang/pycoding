@@ -13,6 +13,8 @@ class Coordinate:
         return f'{abs(self.lat):.1f}°{ns} {abs(self.lon):.1f}°{we}'
 
 
+print(Coordinate.__annotations__)
+
 print(issubclass(Coordinate, tuple))
 print(Coordinate(1, 2))
 
@@ -21,4 +23,4 @@ print(dataclasses.asdict(Coordinate(2, 3)))
 fields = [(f.name, f.default) for f in dataclasses.fields(Coordinate(1, 2))]
 print(fields)
 
-# dataclasses.make_dataclass()
+# dataclasses2.make_dataclass()
