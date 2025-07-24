@@ -1,7 +1,8 @@
 def deco(func):
     def inner():
         print("running inner()")
-        func()
+        r = func()
+        return r
 
     # print("running inner()")
 
