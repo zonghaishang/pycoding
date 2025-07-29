@@ -7,8 +7,21 @@ import math
 class Vector:
     typecode = 'd'
 
+    __match_args__ = ('x', 'y', 'z', 't')
+
     def __init__(self, components):
         self._components = array(self.typecode, components)
+
+    def __getattr__(self, name):
+        cls = type(self)
+        try:
+            pos = cls.__match_args__.index(name)
+        except ValueError:
+            pos = -1
+        if 0 <= pos < len(self._components):
+            return self._components[pos]
+        msg = f'{cls.__name__!r} has no attribute {name!r}'
+        raise AttributeError(msg)
 
     def __getitem__(self, key):
         if isinstance(key, slice):
@@ -56,6 +69,8 @@ class Vector:
 if __name__ == '__main__':
     v = Vector(range(10))
     print(v[1:5])
+
+    print((v.x, v.y, v.z, v.t))
 
     print(v[0])
     # v1 = Vector([3.0, 4.0])

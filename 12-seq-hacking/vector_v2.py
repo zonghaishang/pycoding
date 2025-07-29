@@ -7,8 +7,35 @@ import math
 class Vector:
     typecode = 'd'
 
+    __match_args__ = ('x', 'y', 'z', 't')
+
     def __init__(self, components):
         self._components = array(self.typecode, components)
+
+    def __getattr__(self, name):
+        cls = type(self)
+        try:
+            pos = cls.__match_args__.index(name)
+        except ValueError:
+            pos = -1
+        if 0 <= pos < len(self._components):
+            return self._components[pos]
+        msg = f'{cls.__name__!r} has no attribute {name!r}'
+        raise AttributeError(msg)
+
+    def __setattr__(self, name, value):
+        cls = type(self)
+        if len(name) == 1:
+            if name in cls.__match_args__:
+                error = 'readonly attribute {name!r}'
+            elif name.islower():
+                error = "can't set attribute a to z in {cls_name!r}"
+            else:
+                error = ''
+            if error:
+                msg = error.format(cls_name=cls.__name__, name=name)
+                raise AttributeError(msg)
+        super().__setattr__(name, value)
 
     def __getitem__(self, key):
         if isinstance(key, slice):
@@ -57,7 +84,16 @@ if __name__ == '__main__':
     v = Vector(range(10))
     print(v[1:5])
 
+    print((v.x, v.y, v.z, v.t))
+
     print(v[0])
+
+    v.color = 'red'
+    print(v.color)
+
+    # ops, not allowed now
+    # v.x = 1
+
     # v1 = Vector([3.0, 4.0])
     # print(v1)
     #
