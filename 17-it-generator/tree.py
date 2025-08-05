@@ -1,3 +1,6 @@
+import numbers
+
+
 def tree(cls):
     yield cls.__name__, 0
     yield from sub_tree(cls, 1)
@@ -17,3 +20,4 @@ def display(cls):
 
 if __name__ == '__main__':
     display(BaseException)
+    # display(numbers.Real)
